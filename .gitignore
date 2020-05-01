@@ -1,0 +1,10 @@
+target/
+.idea/*
+build/
+config/
+node_modules/
+log4j-application.log
+package.json
+webpack.config.js
+webpack.generated.js
+*.iml
