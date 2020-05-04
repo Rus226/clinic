@@ -9,8 +9,11 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.ErrorEvent;
+import com.vaadin.flow.server.VaadinSession;
 import ru.ruslan.ui.view.doctor.DoctorView;
 import ru.ruslan.ui.view.patient.PatientView;
+import ru.ruslan.ui.view.recipe.RecipeView;
 
 @CssImport("./styles/shared-styles.css")
 public class MainLayout extends AppLayout {
@@ -25,8 +28,10 @@ public class MainLayout extends AppLayout {
         doctorLink.setHighlightCondition(HighlightConditions.sameLocation());
         RouterLink patientLink = new RouterLink("Patients", PatientView.class);
         patientLink.setHighlightCondition(HighlightConditions.sameLocation());
+        RouterLink recipeLink = new RouterLink("Recipes", RecipeView.class);
+        recipeLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout(doctorLink, patientLink));
+        addToDrawer(new VerticalLayout(recipeLink, doctorLink, patientLink));
     }
 
     private void createHeader() {

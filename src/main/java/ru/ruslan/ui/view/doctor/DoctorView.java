@@ -11,6 +11,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.ruslan.backend.entity.Doctor;
+import ru.ruslan.backend.service.DoctorService;
 import ru.ruslan.backend.service.DoctorServiceImpl;
 import ru.ruslan.backend.service.PatientServiceImpl;
 import ru.ruslan.backend.service.RecipeServiceImpl;
@@ -21,26 +22,17 @@ import ru.ruslan.ui.MainLayout;
 @PageTitle("Doctors")
 public class DoctorView extends VerticalLayout {
 
-    private DoctorServiceImpl doctorService;
-    private PatientServiceImpl patientService;
-    private RecipeServiceImpl recipeService;
-
+    private DoctorService doctorService;
 
     private Grid<Doctor> gridDoctor = new Grid<>(Doctor.class);
 
     private TextField filterText = new TextField();
     private DoctorForm doctorForm;
 
-
-    public DoctorView(DoctorServiceImpl doctorService,
-                      PatientServiceImpl patientService,
-                      RecipeServiceImpl recipeService){
-
+    public DoctorView(DoctorService doctorService){
         this.doctorService = doctorService;
-        this.patientService = patientService;
-        this.recipeService = recipeService;
 
-        addClassName("list-view");
+        addClassName("doctor-view");
         setSizeFull();
         configureGrid();
 
@@ -52,7 +44,6 @@ public class DoctorView extends VerticalLayout {
         Div content = new Div(gridDoctor, doctorForm);
         content.addClassName("content");
         content.setSizeFull();
-
 
         add(configureToolBar(), content);
         updateList();
@@ -70,7 +61,6 @@ public class DoctorView extends VerticalLayout {
         updateList();
         closeEditor();
     }
-
 
     private HorizontalLayout configureToolBar() {
         filterText.setPlaceholder("Filter by Name...");
@@ -96,12 +86,11 @@ public class DoctorView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        gridDoctor.addClassName("doctor-grid");
+        gridDoctor.addClassName("doctorGrid");
         gridDoctor.setSizeFull();
         gridDoctor.setColumns("firstName", "secondName", "patronymic", "specialization");
 
         gridDoctor.asSingleSelect().addValueChangeListener(event -> editDoctor(event.getValue()));
-
     }
 
     private void editDoctor(Doctor doctor) {

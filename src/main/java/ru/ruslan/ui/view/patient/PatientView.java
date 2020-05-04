@@ -12,6 +12,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.ruslan.backend.entity.Patient;
 import ru.ruslan.backend.service.DoctorServiceImpl;
+import ru.ruslan.backend.service.PatientService;
 import ru.ruslan.backend.service.PatientServiceImpl;
 import ru.ruslan.backend.service.RecipeServiceImpl;
 import ru.ruslan.ui.MainLayout;
@@ -21,9 +22,7 @@ import ru.ruslan.ui.MainLayout;
 @PageTitle("Patients")
 public class PatientView extends VerticalLayout {
 
-    private DoctorServiceImpl doctorService;
-    private PatientServiceImpl patientService;
-    private RecipeServiceImpl recipeService;
+    private PatientService patientService;
 
 
     private Grid<Patient> gridPatient = new Grid<>(Patient.class);
@@ -32,15 +31,10 @@ public class PatientView extends VerticalLayout {
     private PatientForm patientForm;
 
 
-    public PatientView(DoctorServiceImpl doctorService,
-                      PatientServiceImpl patientService,
-                      RecipeServiceImpl recipeService){
-
-        this.doctorService = doctorService;
+    public PatientView(PatientService patientService){
         this.patientService = patientService;
-        this.recipeService = recipeService;
 
-        addClassName("list-view");
+        addClassName("patient-view");
         setSizeFull();
         configureGrid();
 
@@ -96,7 +90,7 @@ public class PatientView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        gridPatient.addClassName("Patient-grid");
+        gridPatient.addClassName("patientGrid");
         gridPatient.setSizeFull();
         gridPatient.setColumns("firstName", "secondName", "patronymic", "phoneNumber");
 

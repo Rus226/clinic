@@ -33,6 +33,7 @@ public class PatientForm extends FormLayout {
     public PatientForm() {
         addClassName("patient-form");
         binder.bindInstanceFields(this);
+        phoneNumber.setValue("+");
 
         add(firstName,
                 secondName,

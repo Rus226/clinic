@@ -1,11 +1,8 @@
 package ru.ruslan.backend.service;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.ruslan.backend.dao.PatientDAO;
-import ru.ruslan.backend.entity.Doctor;
+import ru.ruslan.backend.dao.PatientRepository;
 import ru.ruslan.backend.entity.Patient;
 
 import java.util.List;
@@ -14,34 +11,34 @@ import java.util.List;
 @AllArgsConstructor
 public class PatientServiceImpl implements PatientService {
 
-    private PatientDAO patientDAO;
+    private PatientRepository patientRepository;
 
     @Override
     public List<Patient> findAll() {
-        return (List<Patient>) patientDAO.findAll();
+        return (List<Patient>) patientRepository.findAll();
     }
 
     @Override
     public List<Patient> findAll(String filterText) {
         if (filterText == null || filterText.isEmpty()){
-            return (List<Patient>) patientDAO.findAll();
+            return (List<Patient>) patientRepository.findAll();
         } else {
-            return patientDAO.search(filterText);
+            return patientRepository.findByFirstNameContainingOrSecondNameContaining(filterText, filterText);
         }
     }
 
     @Override
     public Patient findById(Long id) {
-        return patientDAO.findById(id).get();
+        return patientRepository.findById(id).get();
     }
 
     @Override
     public void delete(Patient patient) {
-        patientDAO.delete(patient);
+        patientRepository.delete(patient);
     }
 
     @Override
     public void save(Patient patient) {
-        patientDAO.save(patient);
+        patientRepository.save(patient);
     }
 }
