@@ -9,8 +9,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.ErrorEvent;
-import com.vaadin.flow.server.VaadinSession;
 import ru.ruslan.ui.view.doctor.DoctorView;
 import ru.ruslan.ui.view.patient.PatientView;
 import ru.ruslan.ui.view.recipe.RecipeView;
@@ -21,7 +19,6 @@ public class MainLayout extends AppLayout {
     public MainLayout() {
         createHeader();
         createDrawer();
-
     }
 
     private void createDrawer() {
@@ -48,6 +45,5 @@ public class MainLayout extends AppLayout {
         header.addClassName("header");
 
         addToNavbar(header);
-
     }
 }

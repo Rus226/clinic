@@ -13,7 +13,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 import ru.ruslan.backend.entity.Doctor;
 
-public class DoctorDialog extends Dialog {//FormLayout {
+public class DoctorDialog extends Dialog {
 
     private TextField firstName = new TextField("First name");
     private TextField secondName = new TextField("Second name");
@@ -31,7 +31,6 @@ public class DoctorDialog extends Dialog {//FormLayout {
     }
 
     public DoctorDialog() {
-//        addClassName("doctor-form");
         binder.bindInstanceFields(this);
 
         add(firstName,

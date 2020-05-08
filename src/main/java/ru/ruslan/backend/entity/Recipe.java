@@ -33,12 +33,9 @@ public class Recipe {
     private Doctor doctor;
 
     @CreationTimestamp
-//    @Column(updatable = false)
-//    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateCreation;
 
     @NotNull
-//    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateTermination;
 
     @Enumerated(EnumType.STRING)

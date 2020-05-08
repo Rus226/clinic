@@ -26,28 +26,22 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> findAll(
             String filterTextByDescription,
-//            String filterTextByDoctor,
             String filterTextByPatient,
-            Priority priority
+            Priority filterPriority
 
     ) {
         if (
                 StringUtils.isBlank(filterTextByDescription) &&
-//                StringUtils.isBlank(filterTextByDoctor) &&
                 StringUtils.isBlank(filterTextByPatient) &&
-                        priority == null
-        ){
-            log.info("priority null");
+                filterPriority == null){
             return (List<Recipe>) recipeRepository.findAll();
-        } else if (priority == null){
-            log.info("fullConstructor");
+        } else if (filterPriority == null){
             return recipeRepository.findByDescriptionContainingAndPatientFirstNameContaining(
                     filterTextByDescription, filterTextByPatient);
         } else {
             return recipeRepository.findByDescriptionContainingAndPatientFirstNameContainingAndPriority(
-                    filterTextByDescription, filterTextByPatient, priority);
+                    filterTextByDescription, filterTextByPatient, filterPriority);
         }
-
     }
 
     @Override
@@ -62,8 +56,6 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public void save(Recipe recipe)  {
-
             recipeRepository.save(recipe);
-
     }
 }

@@ -29,11 +29,6 @@ a[highlight] {
     padding: var(--lumo-space-m);
 }
 
-@media all and (max-width: 1100px) {
-    .doctor-view.editing .toolbar,
-    .doctor-view.editing .doctorGrid {
-        display: none;
-   }
 }
 
 /* Patient view */
@@ -50,11 +45,6 @@ a[highlight] {
     padding: var(--lumo-space-m);
 }
 
-@media all and (max-width: 1100px) {
-    .patient-view.editing .toolbar,
-    .patient-view.editing .patientGrid {
-        display: none;
-   }
 }
 
 /* Recipe view */
@@ -71,11 +61,6 @@ a[highlight] {
     padding: var(--lumo-space-m);
 }
 
-@media all and (max-width: 1100px) {
-    .recipe-view.editing .toolbar,
-    .recipe-view.editing .recipeGrid {
-        display: none;
-   }
 
 /* DoctorStatistic view
 

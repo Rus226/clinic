@@ -26,6 +26,7 @@ public class PatientView extends VerticalLayout {
     private Grid<Patient> gridPatient = new Grid<>(Patient.class);
 
     private TextField filterText = new TextField();
+
     private PatientDialog patientDialog;
 
 
@@ -44,7 +45,6 @@ public class PatientView extends VerticalLayout {
         Div content = new Div(gridPatient, patientDialog);
         content.addClassName("content");
         content.setSizeFull();
-
 
         add(configureToolBar(), content);
         updateList();
@@ -79,7 +79,6 @@ public class PatientView extends VerticalLayout {
     }
 
     private void addPatient() {
-//        gridPatient.asSingleSelect().clear();
         editPatient(new Patient());
     }
 
@@ -104,14 +103,10 @@ public class PatientView extends VerticalLayout {
         } else {
             patientDialog.setPatient(patient);
             patientDialog.open();
-//            patientForm.setVisible(true);
-//            addClassName("editing");
         }
     }
     private void closeEditor() {
         patientDialog.setPatient(null);
         patientDialog.close();
-//        patientForm.setVisible(false);
-//        removeClassName("editing");
     }
 }

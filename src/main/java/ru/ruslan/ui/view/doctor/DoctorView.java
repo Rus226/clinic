@@ -25,6 +25,7 @@ public class DoctorView extends VerticalLayout {
     private Grid<Doctor> gridDoctor = new Grid<>(Doctor.class);
 
     private TextField filterText = new TextField();
+
     private DoctorDialog doctorDialog;
 
     public DoctorView(DoctorService doctorService){
@@ -75,7 +76,6 @@ public class DoctorView extends VerticalLayout {
     }
 
     private void addDoctor() {
-//        gridDoctor.asSingleSelect().clear();
         editDoctor(new Doctor());
     }
 
@@ -87,9 +87,7 @@ public class DoctorView extends VerticalLayout {
         gridDoctor.addClassName("doctorGrid");
         gridDoctor.setSizeFull();
         gridDoctor.setColumns("firstName", "secondName", "patronymic", "specialization");
-
         gridDoctor.addColumn(new NativeButtonRenderer<>("Edit", this::editDoctor)).setHeader("Action");
-
         gridDoctor.asSingleSelect().addValueChangeListener(event -> editDoctor(event.getValue()));
     }
 
@@ -99,14 +97,10 @@ public class DoctorView extends VerticalLayout {
         } else {
             doctorDialog.setDoctor(doctor);
             doctorDialog.open();
-//            doctorForm.setVisible(true);
-//            addClassName("editing");
         }
     }
     private void closeEditor() {
         doctorDialog.setDoctor(null);
         doctorDialog.close();
-//        doctorForm.setVisible(false);
-//        removeClassName("editing");
     }
 }

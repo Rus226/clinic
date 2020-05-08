@@ -14,11 +14,3 @@ public class Application extends SpringBootServletInitializer {
     }
 
 }
-
-//    String d = "24/10/2012";
-//    Date date = new Date();
-//        System.out.println(date);
-//                Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(d);
-//                System.out.println(date2);
-//
-//                System.out.println(new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH).format(date));

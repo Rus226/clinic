@@ -13,7 +13,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 import ru.ruslan.backend.entity.Patient;
 
-public class PatientDialog extends Dialog {//FormLayout {
+public class PatientDialog extends Dialog {
 
     private TextField firstName = new TextField("First name");
     private TextField secondName = new TextField("Second name");
@@ -31,7 +31,6 @@ public class PatientDialog extends Dialog {//FormLayout {
     }
 
     public PatientDialog() {
-//        addClassName("patient-form");
         binder.bindInstanceFields(this);
         phoneNumber.setPlaceholder("Only 10 digits");
 
@@ -39,7 +38,8 @@ public class PatientDialog extends Dialog {//FormLayout {
                 secondName,
                 patronymic,
                 phoneNumber,
-                createButtonsLayout());
+                createButtonsLayout()
+        );
 
         setWidth("260px");
         setHeight("360px");

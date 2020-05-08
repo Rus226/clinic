@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -30,7 +28,7 @@ public class Patient {
     @NotBlank
     private String patronymic;
 
-    @Pattern(regexp="[\\d]{10}", message = "Введите 10 цифр (цифру \"8\" не учитывайте)")
+    @Pattern(regexp="[\\d]{10}", message = "Only 10 digits")
     private String phoneNumber;
 
     public String getFirstAndSecondName(){

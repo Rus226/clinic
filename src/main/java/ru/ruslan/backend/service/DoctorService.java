@@ -1,6 +1,5 @@
 package ru.ruslan.backend.service;
 
-
 import ru.ruslan.backend.entity.Doctor;
 
 import java.util.List;

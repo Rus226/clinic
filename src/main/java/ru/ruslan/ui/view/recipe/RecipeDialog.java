@@ -10,7 +10,6 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
@@ -22,7 +21,7 @@ import ru.ruslan.backend.entity.Recipe;
 import java.time.LocalDate;
 import java.util.List;
 
-public class RecipeDialog extends Dialog{//FormLayout {
+public class RecipeDialog extends Dialog{
 
     private TextArea description = new TextArea("Description");
 
@@ -30,7 +29,6 @@ public class RecipeDialog extends Dialog{//FormLayout {
     private ComboBox<Doctor> doctor = new ComboBox<>("Doctor");
     private ComboBox<Priority> priority = new ComboBox<>("Priority");
 
-//    DatePicker dateCreation = new DatePicker("Date of Creation");
     private DatePicker dateTermination = new DatePicker("Termination Date");
 
     private Button save = new Button("Save");
@@ -44,13 +42,16 @@ public class RecipeDialog extends Dialog{//FormLayout {
     }
 
     public RecipeDialog(List<Doctor> doctors, List<Patient> patients) {
-//        addClassName("recipe-form");
         binder.bindInstanceFields(this);
+
         patient.setItems(patients);
         patient.setItemLabelGenerator(Patient::getFirstAndSecondName);
+
         doctor.setItems(doctors);
         doctor.setItemLabelGenerator(Doctor::getFirstAndSecondName);
+
         priority.setItems(Priority.values());
+
         dateTermination.setInitialPosition(LocalDate.now());
 
         description.setWidth("350px");
@@ -59,7 +60,6 @@ public class RecipeDialog extends Dialog{//FormLayout {
                 patient,
                 doctor,
                 priority,
-//                dateCreation,
                 dateTermination,
                 createButtonsLayout());
 

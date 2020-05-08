@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.ruslan.backend.entity.Doctor;
@@ -26,7 +25,6 @@ import ru.ruslan.backend.service.RecipeService;
 import ru.ruslan.ui.MainLayout;
 
 import java.util.Locale;
-import java.util.Optional;
 
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Recipes")
@@ -39,8 +37,8 @@ public class RecipeView extends VerticalLayout {
     private Grid<Recipe> gridRecipe = new Grid<>(Recipe.class);
 
     private TextField filterTextByDescription = new TextField();
-//    private TextField filterTextByDoctor = new TextField();
     private TextField filterTextByPatient = new TextField();
+
     private ComboBox<Priority> priority = new ComboBox<>();
 
     private RecipeDialog recipeDialog;
@@ -71,18 +69,9 @@ public class RecipeView extends VerticalLayout {
     private HorizontalLayout configureToolBar() {
         filterTextByDescription.setPlaceholder("Filter by Description...");
         filterTextByDescription.setClearButtonVisible(true);
-//        filterTextByDescription.setValueChangeMode(ValueChangeMode.LAZY);
-//        filterTextByDescription.addValueChangeListener(e -> updateList());
 
         filterTextByPatient.setPlaceholder("Filter by Patient...");
         filterTextByPatient.setClearButtonVisible(true);
-//        filterTextByPatient.setValueChangeMode(ValueChangeMode.LAZY);
-//        filterTextByPatient.addValueChangeListener(e -> updateList());
-
-//        filterTextByDoctor.setPlaceholder("Filter by Doctor...");
-//        filterTextByDoctor.setClearButtonVisible(true);
-//        filterTextByDoctor.setValueChangeMode(ValueChangeMode.LAZY);
-//        filterTextByDoctor.addValueChangeListener(e -> updateList());
 
         priority.setPlaceholder("Filter by Priority...");
         priority.setItems(Priority.values());
@@ -99,7 +88,6 @@ public class RecipeView extends VerticalLayout {
         HorizontalLayout toolbar = new HorizontalLayout(
                 filterTextByDescription,
                 filterTextByPatient,
-//                filterTextByDoctor,
                 priority,
                 filterButton,
                 addDoctorButton
@@ -110,8 +98,6 @@ public class RecipeView extends VerticalLayout {
     }
 
     private void addRecipe() {
-//        gridRecipe.asSingleSelect().clear();
-
         editRecipe(new Recipe());
     }
 
@@ -120,7 +106,6 @@ public class RecipeView extends VerticalLayout {
         gridRecipe.setSizeFull();
         gridRecipe.removeColumnByKey("patient");
         gridRecipe.removeColumnByKey("doctor");
-//        gridRecipe.setColumns("description");
         gridRecipe.setColumns("description", "priority");
 
         gridRecipe.addColumn(new LocalDateRenderer<>(Recipe::getDateCreation, "dd-MMM-yyyy", Locale.ENGLISH))
@@ -139,31 +124,25 @@ public class RecipeView extends VerticalLayout {
 
         gridRecipe.addColumn(new NativeButtonRenderer<>("Edit", this::editRecipe)).setHeader("Action");
 
-//        gridRecipe.setColumns("priority");
         gridRecipe.setItemDetailsRenderer(new ComponentRenderer<>(recipe -> {
             VerticalLayout layout = new VerticalLayout();
             layout.add(new Label("Description: " + recipe.getDescription()));
             return layout;
         }));
-
-//        gridRecipe.asSingleSelect().addValueChangeListener(event -> editRecipe(event.getValue()));
     }
 
 
     private void updateList() {
-        Optional<String> optionalPriority = Optional.of("");
-            gridRecipe.setItems(recipeService.findAll(
-                    filterTextByDescription.getValue(),
-                    filterTextByPatient.getValue(),
-                    priority.getValue()
-                    ));
+        gridRecipe.setItems(recipeService.findAll(
+                filterTextByDescription.getValue(),
+                filterTextByPatient.getValue(),
+                priority.getValue()
+        ));
     }
 
     private void closeEditor() {
         recipeDialog.setRecipe(null);
         recipeDialog.close();
-//        recipeForm.setVisible(false);
-//        removeClassName("editing");
     }
 
     private void saveRecipe(RecipeDialog.SaveEvent event) {
@@ -178,8 +157,6 @@ public class RecipeView extends VerticalLayout {
         } else {
             recipeDialog.setRecipe(recipe);
             recipeDialog.open();
-//            recipeForm.setVisible(true);
-//            addClassName("editing");
         }
     }
 
