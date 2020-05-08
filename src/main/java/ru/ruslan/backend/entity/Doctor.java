@@ -3,11 +3,9 @@ package ru.ruslan.backend.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,6 +27,9 @@ public class Doctor {
 
     @NotBlank
     private String specialization;
+
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    private List<Recipe> recipes;
 
     public String getFirstAndSecondName(){
         return firstName + " " + secondName;

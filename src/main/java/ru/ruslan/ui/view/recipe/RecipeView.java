@@ -1,12 +1,12 @@
 package ru.ruslan.ui.view.recipe;
 
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -16,18 +16,17 @@ import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.server.Page;
-import org.apache.commons.lang3.StringUtils;
 import ru.ruslan.backend.entity.Doctor;
 import ru.ruslan.backend.entity.Patient;
+import ru.ruslan.backend.entity.Priority;
 import ru.ruslan.backend.entity.Recipe;
 import ru.ruslan.backend.service.DoctorService;
 import ru.ruslan.backend.service.PatientService;
 import ru.ruslan.backend.service.RecipeService;
 import ru.ruslan.ui.MainLayout;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Locale;
+import java.util.Optional;
 
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Recipes")
@@ -40,9 +39,11 @@ public class RecipeView extends VerticalLayout {
     private Grid<Recipe> gridRecipe = new Grid<>(Recipe.class);
 
     private TextField filterTextByDescription = new TextField();
-    private TextField filterTextByDoctor = new TextField();
+//    private TextField filterTextByDoctor = new TextField();
     private TextField filterTextByPatient = new TextField();
-    private RecipeForm recipeForm;
+    private ComboBox<Priority> priority = new ComboBox<>();
+
+    private RecipeDialog recipeDialog;
 
     public RecipeView(DoctorService doctorService, RecipeService recipeService, PatientService patientService) {
         this.doctorService = doctorService;
@@ -53,12 +54,12 @@ public class RecipeView extends VerticalLayout {
             setSizeFull();
             configureGrid();
 
-            recipeForm = new RecipeForm(doctorService.findAll(), patientService.findAll());
-            recipeForm.addListener(RecipeForm.SaveEvent.class, this::saveRecipe);
-            recipeForm.addListener(RecipeForm.DeleteEvent.class, this::deleteRecipe);
-            recipeForm.addListener(RecipeForm.CloseEvent.class, e -> closeEditor());
+            recipeDialog = new RecipeDialog(doctorService.findAll(), patientService.findAll());
+            recipeDialog.addListener(RecipeDialog.SaveEvent.class, this::saveRecipe);
+            recipeDialog.addListener(RecipeDialog.DeleteEvent.class, this::deleteRecipe);
+            recipeDialog.addListener(RecipeDialog.CloseEvent.class, e -> closeEditor());
 
-            Div content = new Div(gridRecipe, recipeForm);
+            Div content = new Div(gridRecipe, recipeDialog);
             content.addClassName("content");
             content.setSizeFull();
 
@@ -70,35 +71,47 @@ public class RecipeView extends VerticalLayout {
     private HorizontalLayout configureToolBar() {
         filterTextByDescription.setPlaceholder("Filter by Description...");
         filterTextByDescription.setClearButtonVisible(true);
-        filterTextByDescription.setValueChangeMode(ValueChangeMode.LAZY);
-        filterTextByDescription.addValueChangeListener(e -> updateList());
+//        filterTextByDescription.setValueChangeMode(ValueChangeMode.LAZY);
+//        filterTextByDescription.addValueChangeListener(e -> updateList());
 
         filterTextByPatient.setPlaceholder("Filter by Patient...");
         filterTextByPatient.setClearButtonVisible(true);
-        filterTextByPatient.setValueChangeMode(ValueChangeMode.LAZY);
-        filterTextByPatient.addValueChangeListener(e -> updateList());
+//        filterTextByPatient.setValueChangeMode(ValueChangeMode.LAZY);
+//        filterTextByPatient.addValueChangeListener(e -> updateList());
 
-        filterTextByDoctor.setPlaceholder("Filter by Doctor...");
-        filterTextByDoctor.setClearButtonVisible(true);
-        filterTextByDoctor.setValueChangeMode(ValueChangeMode.LAZY);
-        filterTextByDoctor.addValueChangeListener(e -> updateList());
+//        filterTextByDoctor.setPlaceholder("Filter by Doctor...");
+//        filterTextByDoctor.setClearButtonVisible(true);
+//        filterTextByDoctor.setValueChangeMode(ValueChangeMode.LAZY);
+//        filterTextByDoctor.addValueChangeListener(e -> updateList());
 
+        priority.setPlaceholder("Filter by Priority...");
+        priority.setItems(Priority.values());
+        priority.setClearButtonVisible(true);
+
+        Button filterButton = new Button("Filter");
+        filterButton.addClickListener(click -> updateList());
+        filterButton.addClickShortcut(Key.ENTER);
 
         Button addDoctorButton = new Button("Add Recipe");
         addDoctorButton.addClickListener(click -> addRecipe());
+        addDoctorButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         HorizontalLayout toolbar = new HorizontalLayout(
                 filterTextByDescription,
                 filterTextByPatient,
-                filterTextByDoctor,
-                addDoctorButton);
+//                filterTextByDoctor,
+                priority,
+                filterButton,
+                addDoctorButton
+        );
 
         toolbar.addClassName("toolbar");
         return toolbar;
     }
 
     private void addRecipe() {
-        gridRecipe.asSingleSelect().clear();
+//        gridRecipe.asSingleSelect().clear();
+
         editRecipe(new Recipe());
     }
 
@@ -136,37 +149,41 @@ public class RecipeView extends VerticalLayout {
 //        gridRecipe.asSingleSelect().addValueChangeListener(event -> editRecipe(event.getValue()));
     }
 
-    private void saveRecipe(RecipeForm.SaveEvent event) {
-        recipeService.save(event.getRecipe());
-        updateList();
-        closeEditor();
-    }
 
     private void updateList() {
-        gridRecipe.setItems(recipeService.findAll(
-                filterTextByDescription.getValue(),
-                filterTextByDoctor.getValue(),
-                filterTextByPatient.getValue()
-                ));
+        Optional<String> optionalPriority = Optional.of("");
+            gridRecipe.setItems(recipeService.findAll(
+                    filterTextByDescription.getValue(),
+                    filterTextByPatient.getValue(),
+                    priority.getValue()
+                    ));
     }
 
     private void closeEditor() {
-        recipeForm.setRecipe(null);
-        recipeForm.setVisible(false);
-        removeClassName("editing");
+        recipeDialog.setRecipe(null);
+        recipeDialog.close();
+//        recipeForm.setVisible(false);
+//        removeClassName("editing");
+    }
+
+    private void saveRecipe(RecipeDialog.SaveEvent event) {
+        recipeService.save(event.getRecipe());
+        updateList();
+        closeEditor();
     }
 
     private void editRecipe(Recipe recipe){
         if (recipe == null){
             closeEditor();
         } else {
-            recipeForm.setRecipe(recipe);
-            recipeForm.setVisible(true);
-            addClassName("editing");
+            recipeDialog.setRecipe(recipe);
+            recipeDialog.open();
+//            recipeForm.setVisible(true);
+//            addClassName("editing");
         }
     }
 
-    private void deleteRecipe(RecipeForm.DeleteEvent event) {
+    private void deleteRecipe(RecipeDialog.DeleteEvent event) {
         recipeService.delete(event.getRecipe());
         updateList();
         closeEditor();

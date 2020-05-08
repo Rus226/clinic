@@ -7,14 +7,12 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.ruslan.backend.entity.Doctor;
 import ru.ruslan.backend.service.DoctorService;
-import ru.ruslan.backend.service.DoctorServiceImpl;
-import ru.ruslan.backend.service.PatientServiceImpl;
-import ru.ruslan.backend.service.RecipeServiceImpl;
 import ru.ruslan.ui.MainLayout;
 
 
@@ -27,7 +25,7 @@ public class DoctorView extends VerticalLayout {
     private Grid<Doctor> gridDoctor = new Grid<>(Doctor.class);
 
     private TextField filterText = new TextField();
-    private DoctorForm doctorForm;
+    private DoctorDialog doctorDialog;
 
     public DoctorView(DoctorService doctorService){
         this.doctorService = doctorService;
@@ -36,12 +34,12 @@ public class DoctorView extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        doctorForm = new DoctorForm();
-        doctorForm.addListener(DoctorForm.SaveEvent.class, this::saveDoctor);
-        doctorForm.addListener(DoctorForm.DeleteEvent.class, this::deleteDoctor);
-        doctorForm.addListener(DoctorForm.CloseEvent.class, e -> closeEditor());
+        doctorDialog = new DoctorDialog();
+        doctorDialog.addListener(DoctorDialog.SaveEvent.class, this::saveDoctor);
+        doctorDialog.addListener(DoctorDialog.DeleteEvent.class, this::deleteDoctor);
+        doctorDialog.addListener(DoctorDialog.CloseEvent.class, e -> closeEditor());
 
-        Div content = new Div(gridDoctor, doctorForm);
+        Div content = new Div(gridDoctor, doctorDialog);
         content.addClassName("content");
         content.setSizeFull();
 
@@ -50,13 +48,13 @@ public class DoctorView extends VerticalLayout {
         closeEditor();
     }
 
-    private void saveDoctor(DoctorForm.SaveEvent event) {
+    private void saveDoctor(DoctorDialog.SaveEvent event) {
         doctorService.save(event.getDoctor());
         updateList();
         closeEditor();
     }
 
-    private void deleteDoctor(DoctorForm.DeleteEvent event) {
+    private void deleteDoctor(DoctorDialog.DeleteEvent event) {
         doctorService.delete(event.getDoctor());
         updateList();
         closeEditor();
@@ -77,7 +75,7 @@ public class DoctorView extends VerticalLayout {
     }
 
     private void addDoctor() {
-        gridDoctor.asSingleSelect().clear();
+//        gridDoctor.asSingleSelect().clear();
         editDoctor(new Doctor());
     }
 
@@ -90,6 +88,8 @@ public class DoctorView extends VerticalLayout {
         gridDoctor.setSizeFull();
         gridDoctor.setColumns("firstName", "secondName", "patronymic", "specialization");
 
+        gridDoctor.addColumn(new NativeButtonRenderer<>("Edit", this::editDoctor)).setHeader("Action");
+
         gridDoctor.asSingleSelect().addValueChangeListener(event -> editDoctor(event.getValue()));
     }
 
@@ -97,14 +97,16 @@ public class DoctorView extends VerticalLayout {
         if (doctor == null){
             closeEditor();
         } else {
-            doctorForm.setDoctor(doctor);
-            doctorForm.setVisible(true);
-            addClassName("editing");
+            doctorDialog.setDoctor(doctor);
+            doctorDialog.open();
+//            doctorForm.setVisible(true);
+//            addClassName("editing");
         }
     }
     private void closeEditor() {
-        doctorForm.setDoctor(null);
-        doctorForm.setVisible(false);
-        removeClassName("editing");
+        doctorDialog.setDoctor(null);
+        doctorDialog.close();
+//        doctorForm.setVisible(false);
+//        removeClassName("editing");
     }
 }

@@ -76,4 +76,17 @@ a[highlight] {
     .recipe-view.editing .recipeGrid {
         display: none;
    }
+
+/* DoctorStatistic view
+
+.doctorStatistic-view .doctorStatistic-view {
+    flex: 2;
+}
+
+
+@media all and (max-width: 1100px) {
+    .doctorStatistic-view.editing,
+    .doctorStatistic.editing .recipeGrid {
+        display: none;
+   }*/
 }

@@ -5,7 +5,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -13,7 +13,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 import ru.ruslan.backend.entity.Patient;
 
-public class PatientForm extends FormLayout {
+public class PatientDialog extends Dialog {//FormLayout {
 
     private TextField firstName = new TextField("First name");
     private TextField secondName = new TextField("Second name");
@@ -30,17 +30,22 @@ public class PatientForm extends FormLayout {
         binder.setBean(Patient);
     }
 
-    public PatientForm() {
-        addClassName("patient-form");
+    public PatientDialog() {
+//        addClassName("patient-form");
         binder.bindInstanceFields(this);
-        phoneNumber.setValue("+");
+        phoneNumber.setPlaceholder("Only 10 digits");
 
         add(firstName,
                 secondName,
                 patronymic,
                 phoneNumber,
                 createButtonsLayout());
+
+        setWidth("260px");
+        setHeight("360px");
     }
+
+
 
     private HorizontalLayout createButtonsLayout() {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -63,14 +68,15 @@ public class PatientForm extends FormLayout {
         if (binder.isValid()){
             fireEvent(new SaveEvent(this, binder.getBean()));
         }
+        close();
     }
 
 
     // Events
-    public static abstract class PatientFormEvent extends ComponentEvent<PatientForm> {
+    public static abstract class PatientFormEvent extends ComponentEvent<PatientDialog> {
         private Patient patient;
 
-        protected PatientFormEvent(PatientForm source, Patient patient) {
+        protected PatientFormEvent(PatientDialog source, Patient patient) {
             super(source, false);
             this.patient = patient;
         }
@@ -81,20 +87,20 @@ public class PatientForm extends FormLayout {
     }
 
     public static class SaveEvent extends PatientFormEvent {
-        SaveEvent(PatientForm source, Patient patient) {
+        SaveEvent(PatientDialog source, Patient patient) {
             super(source, patient);
         }
     }
 
     public static class DeleteEvent extends PatientFormEvent {
-        DeleteEvent(PatientForm source, Patient patient) {
+        DeleteEvent(PatientDialog source, Patient patient) {
             super(source, patient);
         }
 
     }
 
     public static class CloseEvent extends PatientFormEvent {
-        CloseEvent(PatientForm source) {
+        CloseEvent(PatientDialog source) {
             super(source, null);
         }
     }

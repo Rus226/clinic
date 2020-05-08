@@ -5,7 +5,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -13,7 +13,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 import ru.ruslan.backend.entity.Doctor;
 
-public class DoctorForm extends FormLayout {
+public class DoctorDialog extends Dialog {//FormLayout {
 
     private TextField firstName = new TextField("First name");
     private TextField secondName = new TextField("Second name");
@@ -30,8 +30,8 @@ public class DoctorForm extends FormLayout {
         binder.setBean(doctor);
     }
 
-    public DoctorForm() {
-        addClassName("doctor-form");
+    public DoctorDialog() {
+//        addClassName("doctor-form");
         binder.bindInstanceFields(this);
 
         add(firstName,
@@ -39,6 +39,9 @@ public class DoctorForm extends FormLayout {
                 patronymic,
                 specialization,
                 createButtonsLayout());
+
+        setWidth("260px");
+        setHeight("360px");
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -62,14 +65,15 @@ public class DoctorForm extends FormLayout {
         if (binder.isValid()){
             fireEvent(new SaveEvent(this, binder.getBean()));
         }
+        close();
     }
 
 
     // Events
-    public static abstract class DoctorFormEvent extends ComponentEvent<DoctorForm> {
+    public static abstract class DoctorFormEvent extends ComponentEvent<DoctorDialog> {
         private Doctor doctor;
 
-        protected DoctorFormEvent(DoctorForm source, Doctor doctor) {
+        protected DoctorFormEvent(DoctorDialog source, Doctor doctor) {
             super(source, false);
             this.doctor = doctor;
         }
@@ -80,20 +84,20 @@ public class DoctorForm extends FormLayout {
     }
 
     public static class SaveEvent extends DoctorFormEvent {
-        SaveEvent(DoctorForm source, Doctor doctor) {
+        SaveEvent(DoctorDialog source, Doctor doctor) {
             super(source, doctor);
         }
     }
 
     public static class DeleteEvent extends DoctorFormEvent {
-        DeleteEvent(DoctorForm source, Doctor doctor) {
+        DeleteEvent(DoctorDialog source, Doctor doctor) {
             super(source, doctor);
         }
 
     }
 
     public static class CloseEvent extends DoctorFormEvent {
-        CloseEvent(DoctorForm source) {
+        CloseEvent(DoctorDialog source) {
             super(source, null);
         }
     }

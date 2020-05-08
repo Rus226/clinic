@@ -14,13 +14,14 @@ import com.vaadin.flow.server.VaadinSession;
 import ru.ruslan.ui.view.doctor.DoctorView;
 import ru.ruslan.ui.view.patient.PatientView;
 import ru.ruslan.ui.view.recipe.RecipeView;
+import ru.ruslan.ui.view.statisticOfDoctor.StatisticOfDoctorView;
 
 @CssImport("./styles/shared-styles.css")
 public class MainLayout extends AppLayout {
     public MainLayout() {
         createHeader();
         createDrawer();
-        
+
     }
 
     private void createDrawer() {
@@ -30,8 +31,10 @@ public class MainLayout extends AppLayout {
         patientLink.setHighlightCondition(HighlightConditions.sameLocation());
         RouterLink recipeLink = new RouterLink("Recipes", RecipeView.class);
         recipeLink.setHighlightCondition(HighlightConditions.sameLocation());
+        RouterLink statisticLink = new RouterLink("Statistic Of Doctor", StatisticOfDoctorView.class);
+        statisticLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout(recipeLink, doctorLink, patientLink));
+        addToDrawer(new VerticalLayout(recipeLink, doctorLink, patientLink, statisticLink));
     }
 
     private void createHeader() {
