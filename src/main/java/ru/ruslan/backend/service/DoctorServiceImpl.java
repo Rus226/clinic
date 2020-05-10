@@ -8,7 +8,6 @@ import ru.ruslan.backend.entity.Doctor;
 
 import java.util.List;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
@@ -17,13 +16,11 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Doctor> findAll() {
-        log.info("we Found");
         return (List<Doctor>) doctorRepository.findAll();
     }
 
     @Override
     public List<Doctor> findAll(String filterText) {
-        log.info("we FoundFilter");
         if (filterText == null || filterText.isEmpty()){
             return (List<Doctor>) doctorRepository.findAll();
         } else {

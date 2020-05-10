@@ -4,6 +4,8 @@ package ru.ruslan.ui.view.patient;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -11,11 +13,13 @@ import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import ru.ruslan.backend.entity.Patient;
 import ru.ruslan.backend.service.PatientService;
 import ru.ruslan.ui.MainLayout;
 
-
+@Slf4j
 @Route(value = "patient", layout = MainLayout.class)
 @PageTitle("Patients")
 public class PatientView extends VerticalLayout {
@@ -58,9 +62,19 @@ public class PatientView extends VerticalLayout {
     }
 
     private void deletePatient(PatientDialog.DeleteEvent event) {
-        patientService.delete(event.getPatient());
-        updateList();
-        closeEditor();
+        try {
+            patientService.delete(event.getPatient());
+            updateList();
+        } catch (DataIntegrityViolationException e){
+            Notification notification = new Notification(
+                    "Failed to complete the request, perhaps you are trying to remove a Patient who has recipes",
+                    10000);
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            notification.open();
+            log.error(e.toString());
+        } finally {
+            closeEditor();
+        }
     }
 
 

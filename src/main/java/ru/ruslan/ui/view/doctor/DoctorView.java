@@ -4,6 +4,8 @@ package ru.ruslan.ui.view.doctor;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -11,11 +13,16 @@ import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import ru.ruslan.backend.entity.Doctor;
 import ru.ruslan.backend.service.DoctorService;
 import ru.ruslan.ui.MainLayout;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 
+@Slf4j
 @Route(value = "doctor", layout = MainLayout.class)
 @PageTitle("Doctors")
 public class DoctorView extends VerticalLayout {
@@ -56,9 +63,19 @@ public class DoctorView extends VerticalLayout {
     }
 
     private void deleteDoctor(DoctorDialog.DeleteEvent event) {
+        try {
         doctorService.delete(event.getDoctor());
         updateList();
-        closeEditor();
+        } catch (DataIntegrityViolationException e){
+            Notification notification = new Notification(
+                    "Failed to complete the request, perhaps you are trying to remove a Doctor who has recipes",
+                    10000);
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            notification.open();
+            log.error(e.toString());
+        } finally {
+            closeEditor();
+        }
     }
 
     private HorizontalLayout configureToolBar() {
