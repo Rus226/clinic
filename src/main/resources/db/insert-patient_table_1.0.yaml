@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: i2
+      author: ris226
+      changes:
+        - insert:
+            tableName: patient
+            columns:
+              - column:
+                  name: first_name
+                  value: "Mark"
+              - column:
+                  name: second_name
+                  value: "Kuprinov"
+              - column:
+                  name: patronymic
+                  value: "Vladislavovich"
+              - column:
+                  name: phone_number
+                  value: "9375630808"
+        - insert:
+            tableName: patient
+            columns:
+              - column:
+                  name: first_name
+                  value: "Nikolay"
+              - column:
+                  name: second_name
+                  value: "Vasin"
+              - column:
+                  name: patronymic
+                  value: "Yanovich"
+              - column:
+                  name: phone_number
+                  value: "9375456248"
+        - insert:
+            tableName: patient
+            columns:
+              - column:
+                  name: first_name
+                  value: "Jim"
+              - column:
+                  name: second_name
+                  value: "Kerry"
+              - column:
+                  name: phone_number
+                  value: "9377778888"

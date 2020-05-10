@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: i1
+      author: ris226
+      changes:
+        - insert:
+            tableName: doctor
+            columns:
+              - column:
+                  name: first_name
+                  value: "Ivan"
+              - column:
+                  name: second_name
+                  value: "Frolov"
+              - column:
+                  name: patronymic
+                  value: "Victorovich"
+              - column:
+                  name: specialization
+                  value: "Dermatology"
+        - insert:
+            tableName: doctor
+            columns:
+              - column:
+                  name: first_name
+                  value: "Sergey"
+              - column:
+                  name: second_name
+                  value: "Pudov"
+              - column:
+                  name: patronymic
+                  value: "Ivanovich"
+              - column:
+                  name: specialization
+                  value: "Anesthesiology"
+        - insert:
+            tableName: doctor
+            columns:
+              - column:
+                  name: first_name
+                  value: "Petr"
+              - column:
+                  name: second_name
+                  value: "Sidorov"
+              - column:
+                  name: patronymic
+                  value: "Michailovich"
+              - column:
+                  name: specialization
+                  value: "Allergy"

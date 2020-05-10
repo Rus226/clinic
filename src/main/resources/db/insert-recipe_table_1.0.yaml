@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: i3
+      author: ris226
+      changes:
+        - insert:
+            tableName: recipe
+            columns:
+              - column:
+                  name: description
+                  value: "Depending on the symptoms, one might need medication which requires a prescription,
+                          such as antibiotics. This means you can’t just walk up to the pharmacist at the counter
+                          and ask for anything – you’ll need a note signed by your doctor stating which medicine
+                          you’re allowed to have, the recommended dosage, and so on."
+              - column:
+                  name: patient_id
+                  value: "1"
+              - column:
+                  name: doctor_id
+                  value: "1"
+              - column:
+                  name: date_creation
+                  value: "2020-03-02"
+              - column:
+                  name: date_termination
+                  value: "2020-03-15"
+              - column:
+                  name: priority
+                  value: "CITO"
+        - insert:
+            tableName: recipe
+            columns:
+              - column:
+                  name: description
+                  value: "Some substances are controlled for various reasons.
+                          They might be highly addictive or too strong, or they might only be
+                          given to patients with officially diagnosed physical or psychological conditions."
+              - column:
+                  name: patient_id
+                  value: "2"
+              - column:
+                  name: doctor_id
+                  value: "2"
+              - column:
+                  name: date_creation
+                  value: "2020-04-02"
+              - column:
+                  name: date_termination
+                  value: "2020-04-13"
+              - column:
+                  name: priority
+                  value: "NORMAL"
+        - insert:
+            tableName: recipe
+            columns:
+              - column:
+                  name: description
+                  value: "In German and Swiss German, a prescription is called ein Rezept,
+                          which sounds similar to recipe or receipt in English. No wonder so many people
+                          confuse these words. This is a false friend in many other languages, not just Swiss German."
+              - column:
+                  name: patient_id
+                  value: "3"
+              - column:
+                  name: doctor_id
+                  value: "3"
+              - column:
+                  name: date_creation
+                  value: "2020-03-10"
+              - column:
+                  name: date_termination
+                  value: "2020-03-23"
+              - column:
+                  name: priority
+                  value: "STATIM"

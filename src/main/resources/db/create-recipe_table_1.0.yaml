@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: c3
+      author: ris226
+      changes:
+        createTable:
+          tableName: recipe
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                autoIncrement: true
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: description
+                type: varchar(2000)
+                constraints:
+                  nullable: false
+            - column:
+                name: patient_id
+                type: BIGINT
+                constraints:
+                  nullable: false
+                  foreignKeyName: FK_recipe_patient
+                  references: patient(id)
+                  onDelete: CASCADE
+            - column:
+                name: doctor_id
+                type: BIGINT
+                constraints:
+                  nullable: false
+                  foreignKeyName: FK_recipe_doctor
+                  references: doctor(id)
+                  onDelete: CASCADE
+            - column:
+                name: date_creation
+                type: date
+                constraints:
+                  nullable: false
+            - column:
+                name: date_termination
+                type: date
+                constraints:
+                  nullable: false
+            - column:
+                name: priority
+                type: varchar(30)
+                constraints:
+                  nullable: false

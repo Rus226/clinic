@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: c2
+      author: ris226
+      changes:
+        createTable:
+          tableName: patient
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                autoIncrement: true
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: first_name
+                type: varchar(40)
+                constraints:
+                  nullable: false
+            - column:
+                name: second_name
+                type: varchar(40)
+                constraints:
+                  nullable: false
+            - column:
+                name: patronymic
+                type: varchar(40)
+            - column:
+                name: phone_number
+                type: varchar(10)
+                constraints:
+                  nullable: false

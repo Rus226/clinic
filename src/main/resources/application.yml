@@ -1,0 +1,13 @@
+spring:
+  liquibase:
+    change-log: classpath:db/db.changelog-master.yaml
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/clinic?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+#    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    username: root
+    password: root123

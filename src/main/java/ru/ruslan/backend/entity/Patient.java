@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -25,7 +25,6 @@ public class Patient {
     @NotBlank
     private String secondName;
 
-    @NotBlank
     private String patronymic;
 
     @Pattern(regexp="[\\d]{10}", message = "Only 10 digits")

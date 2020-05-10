@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/create-doctor_table_1.0.yaml
+  - include:
+      file: db/create-patient_table_1.0.yaml
+  - include:
+      file: db/create-recipe_table_1.0.yaml
+  - include:
+      file: db/insert-doctor_table_1.0.yaml
+  - include:
+      file: db/insert-patient_table_1.0.yaml
+  - include:
+      file: db/insert-recipe_table_1.0.yaml

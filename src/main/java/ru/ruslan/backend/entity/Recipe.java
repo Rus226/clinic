@@ -15,8 +15,8 @@ import java.time.LocalDate;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "Description can not be empty")
     @Column(length = 2000)
