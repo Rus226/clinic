@@ -7,6 +7,9 @@ databaseChangeLog:
             tableName: recipe
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: description
                   value: "Depending on the symptoms, one might need medication which requires a prescription,
                           such as antibiotics. This means you can’t just walk up to the pharmacist at the counter
@@ -31,6 +34,9 @@ databaseChangeLog:
             tableName: recipe
             columns:
               - column:
+                  name: id
+                  value: 2
+              - column:
                   name: description
                   value: "Some substances are controlled for various reasons.
                           They might be highly addictive or too strong, or they might only be
@@ -53,6 +59,9 @@ databaseChangeLog:
         - insert:
             tableName: recipe
             columns:
+              - column:
+                  name: id
+                  value: 3
               - column:
                   name: description
                   value: "In German and Swiss German, a prescription is called ein Rezept,

@@ -29,8 +29,6 @@ a[highlight] {
     padding: var(--lumo-space-m);
 }
 
-}
-
 /* Patient view */
 .patient-view .content {
     display: flex;
@@ -45,8 +43,6 @@ a[highlight] {
     padding: var(--lumo-space-m);
 }
 
-}
-
 /* Recipe view */
 .recipe-view .content {
     display: flex;
@@ -59,19 +55,4 @@ a[highlight] {
 .recipe-view .recipe-form {
     flex: 1;
     padding: var(--lumo-space-m);
-}
-
-
-/* DoctorStatistic view
-
-.doctorStatistic-view .doctorStatistic-view {
-    flex: 2;
-}
-
-
-@media all and (max-width: 1100px) {
-    .doctorStatistic-view.editing,
-    .doctorStatistic.editing .recipeGrid {
-        display: none;
-   }*/
 }

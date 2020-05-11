@@ -7,6 +7,9 @@ databaseChangeLog:
             tableName: doctor
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: first_name
                   value: "Ivan"
               - column:
@@ -22,6 +25,9 @@ databaseChangeLog:
             tableName: doctor
             columns:
               - column:
+                  name: id
+                  value: 2
+              - column:
                   name: first_name
                   value: "Sergey"
               - column:
@@ -36,6 +42,9 @@ databaseChangeLog:
         - insert:
             tableName: doctor
             columns:
+              - column:
+                  name: id
+                  value: 3
               - column:
                   name: first_name
                   value: "Petr"
