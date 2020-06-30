@@ -1,11 +1,12 @@
 spring:
   liquibase:
     change-log: classpath:db/db.changelog-master.yaml
-    enabled: true
+    enabled: false
   jpa:
     hibernate:
       ddl-auto: validate
 
   datasource:
-    url: jdbc:hsqldb:mem:clinic
-    username: SA
+    url: ${SPRING_DATASOURCE_URL:jdbc:hsqldb:mem:clinic}
+    username: ${SPRING_DATASOURCE_USERNAME:SA}
+    password: ${SPRING_DATASOURCE_PASSWORD}
